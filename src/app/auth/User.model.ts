@@ -4,10 +4,18 @@ export default class User {
     correo: string;
     uid: string;
 
-    constructor(nombre: string, correo: string, uid: string) {
-        this.nombre = nombre;
-        this.correo = correo;
-        this.uid = uid;
+    constructor(obj: DataObj) {
+        this.nombre = obj && obj.nombre || null;
+        this.correo = obj && obj.correo || null;
+        this.uid    = obj && obj.uid || null;
     }
+
+}
+
+interface DataObj {
+
+    uid: string;
+    correo: string;
+    nombre: string;
 
 }
