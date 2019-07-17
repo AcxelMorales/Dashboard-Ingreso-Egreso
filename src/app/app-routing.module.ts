@@ -6,13 +6,16 @@ import { RegistryComponent } from './auth/registry/registry.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { dashboardRoutes } from './dashboard/dashboard.routes';
 
+import { AuthGuard } from './auth/auth.guard';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'registry', component: RegistryComponent },
   { 
     path: '', 
     component: DashboardComponent, 
-    children: dashboardRoutes
+    children: dashboardRoutes,
+    canActivate: [AuthGuard]
   },
   { path: '**', redirectTo: '', component: DashboardComponent },
 ];
