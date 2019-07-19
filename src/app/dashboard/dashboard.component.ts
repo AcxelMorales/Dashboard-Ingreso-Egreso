@@ -1,12 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { EgresoIngresoService } from '../egreso-ingreso/egreso-ingreso.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styles: []
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
-  constructor() { }
 
+  constructor(
+    private _eiService: EgresoIngresoService
+  ) { }
+
+  ngOnInit(): void {
+    this._eiService.initEgresoIngresoListener();
+  }
 }

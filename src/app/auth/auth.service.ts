@@ -8,7 +8,7 @@ import { AppState } from '../app.reducer';
 
 // Actions
 import { ActivateLoadingAction, DeactivateLoadingAction } from '../shared/ui.actions';
-import { SetUserAction } from './auth.actions';
+import { SetUserAction, UnsetUserAction } from './auth.actions';
 
 // SweetAlert
 import Swal from 'sweetalert2';
@@ -29,6 +29,7 @@ import User from './User.model';
 export class AuthService {
 
   private userSubscription: Subscription = new Subscription();
+  private user: User;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -41,10 +42,14 @@ export class AuthService {
     this.afAuth.authState.subscribe((fbUser: firebase.User) => {
       if (fbUser) {
         this.userSubscription = this.afDB.doc(`${fbUser.uid}/usuario`).valueChanges().subscribe((userObj: any) => {
-          this.store.dispatch(new SetUserAction(new User(userObj)));
+          const newUser = new User(userObj);
+          this.store.dispatch(new SetUserAction(newUser));
+
+          this.user = newUser;
         });
       } else {
         this.userSubscription.unsubscribe();
+        this.user = null;
       }
     });
   }
@@ -119,6 +124,12 @@ export class AuthService {
   logout(): void {
     this.router.navigate(['/login']);
     this.afAuth.auth.signOut();
+
+    this.store.dispatch(new UnsetUserAction());
+  }
+
+  getUser(): User {
+    return { ...this.user }; // Rompemos la referencia
   }
 
 }
