@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../app.reducer';
+import { AppState } from 'src/app/egreso-ingreso/egreso-ingreso.reducer';
 
 import { Subscription } from 'rxjs';
 

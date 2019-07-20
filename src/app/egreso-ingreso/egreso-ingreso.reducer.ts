@@ -2,8 +2,14 @@ import * as ei from './egreso-ingreso.actions';
 
 import { EgresoIngreso } from './EgresoIngreso.model';
 
+import { AppState } from '../app.reducer';
+
 export interface EIState {
     items: EgresoIngreso[];
+}
+
+export interface AppState extends AppState {
+    ei: EIState;
 }
 
 const initState: EIState = {
